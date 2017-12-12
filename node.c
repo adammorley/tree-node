@@ -52,8 +52,19 @@ bool node_isleaf(node* n) {
 /*
     recursively compare two nodes
     interface for comparison when structured into a tree
+
+    note that this only works for carefully constructed
+    trees
 */
 bool node_compare_recurse(node* n0, node* n1) {
+    /*
+        since this is recursive, two identical nodes
+        may have null pointers as leaf nodes
+        that case will be "identical"
+        though this has the side effect that two
+        null pointers are the same, which is ok
+    */
+    if (n0 == NULL && n1 == NULL) return true;
     if (node_isleaf(n0) && node_isleaf(n1)) {
         return node_compare(n0, n1);
     }
