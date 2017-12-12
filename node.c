@@ -33,7 +33,9 @@ bool node_compare(node* n0, node* n1) {
         if (_ptr_compare(n0->r, n1->r)) {
             if (_ptr_compare(n0->l, n1->l)) {
                 if (n0->d == n1->d) {
-                    return true;
+                    if (n0->b == n1->b) {
+                        return true;
+                    }
                 }
             }
         }
