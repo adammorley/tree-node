@@ -6,5 +6,5 @@ all: test
 clean:
 	rm -f test *.o
 
-test: test.c node.c
-	$(CC) -o test test.c node.c $(CFLAGS)
+test: test.c node.c ../log/log.c
+	$(CC) -o test test.c node.c ../log/log.c $(CFLAGS)

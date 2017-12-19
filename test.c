@@ -35,7 +35,38 @@ void test_compare() {
     assert(node_compare_recurse(n1_0, n1_1));
 }
 
+void test_check() {
+    node* n_1 = node_new(-1);
+    node* n0 = node_new(0);
+    node* n1 = node_new(1);
+    node* n2 = node_new(2);
+    node* n3 = node_new(3);
+    node* n4 = node_new(4);
+    node* n5 = node_new(5);
+
+    n3->r = n4;
+    n4->p = n3;
+    n3->l = n1;
+    n1->p = n3;
+    n1->l = n0;
+    n0->p = n1;
+    n0->l = n_1;
+    n_1->p = n0;
+    n0->b = -1;
+    n1->b = -1;
+    n1->r = n2;
+    n2->p = n1;
+    n4->r = n5;
+    n4->b = 1;
+    n5->p = n4;
+
+    n3->b = -1;
+
+    node_check_tree(n3);
+}
+
 int main() {
     test_basic();
     test_compare();
+    test_check();
 }
