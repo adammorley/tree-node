@@ -42,6 +42,11 @@ bool node_compare(node* n0, node* n1);
 bool node_compare_recurse(node* n0, node* n1);
 
 /*
+    recursively free nodes under n, including n
+*/
+void node_free_recurse(node* n);
+
+/*
     is the node a leaf node?
 */
 bool node_isleaf(node* n);

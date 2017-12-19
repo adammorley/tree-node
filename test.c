@@ -33,6 +33,8 @@ void test_compare() {
 
     assert(node_compare(n1_0, n1_1));
     assert(node_compare_recurse(n1_0, n1_1));
+    node_free_recurse(n1_0);
+    node_free_recurse(n1_1);
 }
 
 void test_check() {
@@ -63,6 +65,7 @@ void test_check() {
     n3->b = -1;
 
     node_check_tree(n3);
+    node_free_recurse(n3);
 }
 
 int main() {

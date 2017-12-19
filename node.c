@@ -102,6 +102,12 @@ bool node_compare_recurse(node* n0, node* n1) {
     return false;
 }
 
+void node_free_recurse(node* n) {
+    if (n->l != NULL) node_free_recurse(n->l);
+    if (n->r != NULL) node_free_recurse(n->r);
+    free(n);
+}
+
 bool node_isleaf(node* n) {
     if (n->l == NULL && n->r == NULL) return true;
     return false;
