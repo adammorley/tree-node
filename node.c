@@ -5,8 +5,8 @@
 #include "node.h"
 
 // returns ownership
-node* node_new(long d) {
-    node* n = (node*) malloc(sizeof(node));
+tree_node* tree_node_new(long d) {
+    tree_node* n = (tree_node*) malloc(sizeof(tree_node));
     n->l = NULL;
     n->r = NULL;
     n->p = NULL;
@@ -15,38 +15,38 @@ node* node_new(long d) {
     return n;
 }
 
-long node_calculate_height(node* n) {
+long tree_node_calculate_height(tree_node* n) {
     long h_l = 0;
     long h_r = 0;
     if (n->l != NULL) {
         h_l += 1;
-        h_l += node_calculate_height(n->l);
+        h_l += tree_node_calculate_height(n->l);
     }
     if (n->r != NULL) {
         h_r += 1;
-        h_r += node_calculate_height(n->r);
+        h_r += tree_node_calculate_height(n->r);
     }
     return (h_r >= h_l ? h_r : h_l);
 }
 
-void node_check_tree(node* n) {
+void tree_node_check(tree_node* n) {
     if (n != NULL) {
         if (n->l != NULL) {
             Assert(n->d > n->l->d, __func__, "node %lu d %li L child of %lu is misplaced", n->l, n->d, n->l->d);
-            node_check_tree(n->l);
+            tree_node_check(n->l);
         }
         if (n->r != NULL) {
             Assert(n->d < n->r->d, __func__, "node %lu d %li R child of %lu is misplaced", n->r, n->d, n->r->d);
-            node_check_tree(n->r);
+            tree_node_check(n->r);
         }
-        node_validate_b(n);
+        tree_node_validate_b(n);
     }
 }
 
 /*
     compare the values stored at the two tree nodes
 */
-static bool _ptr_compare(node* ptr0, node* ptr1) {
+static bool _ptr_compare(tree_node* ptr0, tree_node* ptr1) {
     if (ptr0 == NULL && ptr1 != NULL) return false;
     if (ptr0 != NULL && ptr1 == NULL) return false;
     if (ptr0 == NULL && ptr1 == NULL) return true;
@@ -58,7 +58,7 @@ static bool _ptr_compare(node* ptr0, node* ptr1) {
     compare two tree nodes by comparing the contents of their
     pointers and at last, the data itself
 */
-bool node_compare(node* n0, node* n1) {
+bool tree_node_compare(tree_node* n0, tree_node* n1) {
     if (_ptr_compare(n0->p, n1->p)) {
         if (_ptr_compare(n0->r, n1->r)) {
             if (_ptr_compare(n0->l, n1->l)) {
@@ -80,7 +80,7 @@ bool node_compare(node* n0, node* n1) {
     note that this only works for carefully constructed
     trees
 */
-bool node_compare_recurse(node* n0, node* n1) {
+bool tree_node_compare_recurse(tree_node* n0, tree_node* n1) {
     /*
         since this is recursive, two identical nodes
         may have null pointers as leaf nodes
@@ -89,12 +89,12 @@ bool node_compare_recurse(node* n0, node* n1) {
         null pointers are the same, which is ok
     */
     if (n0 == NULL && n1 == NULL) return true;
-    if (node_isleaf(n0) && node_isleaf(n1)) {
-        return node_compare(n0, n1);
+    if (tree_node_isleaf(n0) && tree_node_isleaf(n1)) {
+        return tree_node_compare(n0, n1);
     }
-    if (node_compare(n0, n1)) {
-        if (node_compare_recurse(n0->l, n1->l)) {
-            if (node_compare_recurse(n0->r, n1->r)) {
+    if (tree_node_compare(n0, n1)) {
+        if (tree_node_compare_recurse(n0->l, n1->l)) {
+            if (tree_node_compare_recurse(n0->r, n1->r)) {
                 return true;
             }
         }
@@ -102,27 +102,27 @@ bool node_compare_recurse(node* n0, node* n1) {
     return false;
 }
 
-void node_free_recurse(node* n) {
-    if (n->l != NULL) node_free_recurse(n->l);
-    if (n->r != NULL) node_free_recurse(n->r);
+void tree_node_free_recurse(tree_node* n) {
+    if (n->l != NULL) tree_node_free_recurse(n->l);
+    if (n->r != NULL) tree_node_free_recurse(n->r);
     free(n);
 }
 
-bool node_isleaf(node* n) {
+bool tree_node_isleaf(tree_node* n) {
     if (n->l == NULL && n->r == NULL) return true;
     return false;
 }
 
-void node_validate_b(node* n) {
+void tree_node_validate_b(tree_node* n) {
     long h_l = 0;
     long h_r = 0;
     if (n->l != NULL) {
         h_l += 1;
-        h_l += node_calculate_height(n->l);
+        h_l += tree_node_calculate_height(n->l);
     }
     if (n->r != NULL) {
         h_r += 1;
-        h_r += node_calculate_height(n->r);
+        h_r += tree_node_calculate_height(n->r);
     }
     Assert(h_r - h_l == n->b, __func__, "node %lu d %li b %li invalid, height: l: %li r: %li", n, n->d, n->b, h_l, h_r);
 }

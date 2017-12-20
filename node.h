@@ -5,10 +5,12 @@
 #ifndef TREE_NODE_H
 #define TREE_NODE_H
 
-typedef struct node node;
-struct node {
-    #include "../node/struct_node.h"
-    node* p; // parent
+typedef struct tree_node tree_node;
+struct tree_node {
+    tree_node* p; // parent
+    tree_node* l; // left child
+    tree_node* r; // right child
+    long d; // value
     /*
         balance factor
         height right - height left
@@ -19,41 +21,41 @@ struct node {
 /*
     create a node, return ownership
 */
-node* node_new(long d);
+tree_node* tree_node_new(long d);
 
 /*
     calculate the height of the trees under a tree node
 */
-long node_calculate_height(node* n);
+long tree_node_calculate_height(tree_node* n);
 
 /*
     check a tree under a node for consistency (b, binary search props, etc)
 */
-void node_check_tree(node* n);
+void tree_node_check(tree_node* n);
 
 /*
     compare the values stored at two nodes
 */
-bool node_compare(node* n0, node* n1);
+bool tree_node_compare(tree_node* n0, tree_node* n1);
 
 /*
     recursive comparison, following pointers
 */
-bool node_compare_recurse(node* n0, node* n1);
+bool tree_node_compare_recurse(tree_node* n0, tree_node* n1);
 
 /*
     recursively free nodes under n, including n
 */
-void node_free_recurse(node* n);
+void tree_node_free_recurse(tree_node* n);
 
 /*
     is the node a leaf node?
 */
-bool node_isleaf(node* n);
+bool tree_node_isleaf(tree_node* n);
 
 /*
     validate the balance factors for a node by calculating heights
 */
-void node_validate_b(node* n);
+void tree_node_validate_b(tree_node* n);
 
 #endif //TREE_NODE_H
