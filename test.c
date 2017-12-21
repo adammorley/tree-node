@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
-#include "node.h"
+#include "tree_node.h"
 
 void test_basic() {
     tree_node* n0 = tree_node_new(5);

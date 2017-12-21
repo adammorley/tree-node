@@ -24,7 +24,7 @@ struct tree_node {
 tree_node* tree_node_new(long d);
 
 /*
-    calculate the height of the trees under a tree node
+    calculate the height of the tree under a tree node
 */
 long tree_node_calculate_height(tree_node* n);
 

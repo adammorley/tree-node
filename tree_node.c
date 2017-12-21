@@ -2,11 +2,12 @@
 #include <stdlib.h>
 
 #include "../log/log.h"
-#include "node.h"
+#include "tree_node.h"
 
 // returns ownership
 tree_node* tree_node_new(long d) {
     tree_node* n = (tree_node*) malloc(sizeof(tree_node));
+    Assert(n != NULL, __func__, "malloc error");
     n->l = NULL;
     n->r = NULL;
     n->p = NULL;
