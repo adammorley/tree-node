@@ -4,9 +4,10 @@
 
 void test_basic() {
     tree_node* n0 = tree_node_new(5);
-    assert(sizeof(tree_node) == sizeof(n0->l) + sizeof(n0->r) + sizeof(n0->p) + sizeof(n0->d) + sizeof(n0->b));
+    assert(sizeof(tree_node) == sizeof(n0->l) + sizeof(n0->r) + sizeof(n0->p) + sizeof(n0->d) + sizeof(n0->c) + sizeof(n0->b) + 2);
     assert(n0->b == 0);
     assert(n0->d == 5);
+    assert(n0->c == 1);
     assert(n0->l == NULL);
     assert(n0->r == NULL);
     tree_node* n1 = tree_node_new(6);

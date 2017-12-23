@@ -12,6 +12,7 @@ tree_node* tree_node_new(long d) {
     n->r = NULL;
     n->p = NULL;
     n->d = d;
+    n->c = 1;
     n->b = 0;
     return n;
 }
@@ -51,7 +52,11 @@ static bool _ptr_compare(tree_node* ptr0, tree_node* ptr1) {
     if (ptr0 == NULL && ptr1 != NULL) return false;
     if (ptr0 != NULL && ptr1 == NULL) return false;
     if (ptr0 == NULL && ptr1 == NULL) return true;
-    if (ptr0->d == ptr1->d) return true;
+    if (ptr0->d == ptr1->d) {
+        if (ptr0->c == ptr1->c) {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -64,8 +69,10 @@ bool tree_node_compare(tree_node* n0, tree_node* n1) {
         if (_ptr_compare(n0->r, n1->r)) {
             if (_ptr_compare(n0->l, n1->l)) {
                 if (n0->d == n1->d) {
-                    if (n0->b == n1->b) {
-                        return true;
+                    if (n0->c == n1->c) {
+                        if (n0->b == n1->b) {
+                            return true;
+                        }
                     }
                 }
             }

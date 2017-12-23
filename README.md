@@ -1,3 +1,3 @@
 # tree-node
 
-an extension of the node repo to support balanced binary trees
+used for making binary trees.  supports AVL trees and multiple insertions of same value

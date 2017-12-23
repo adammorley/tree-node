@@ -12,10 +12,16 @@ struct tree_node {
     tree_node* r; // right child
     long d; // value
     /*
+        count of values (if put twice, == 2)
+        using int here so b can be a short
+        and still have room for a mutex later
+    */
+    unsigned int c; 
+    /*
         balance factor
         height right - height left
     */
-    long b;
+    short b;
 };
 
 /*
