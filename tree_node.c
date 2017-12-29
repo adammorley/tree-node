@@ -2,6 +2,8 @@
 #include <stdlib.h>
 
 #include "../log/log.h"
+#include "../queue/queue.h"
+
 #include "tree_node.h"
 
 // returns ownership
@@ -114,6 +116,14 @@ void tree_node_free_recurse(tree_node* n) {
     if (n->l != NULL) tree_node_free_recurse(n->l);
     if (n->r != NULL) tree_node_free_recurse(n->r);
     free(n);
+}
+
+void tree_node_inorder(tree_node* n, queue* q) {
+    if (n != NULL) {
+        tree_node_inorder(n->l, q);
+        q_enqueue(q, n);
+        tree_node_inorder(n->r, q);
+    }
 }
 
 bool tree_node_isleaf(tree_node* n) {

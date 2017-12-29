@@ -1,6 +1,7 @@
 #include <stdbool.h>
 
 #include "../log/log.h"
+#include "../queue/queue.h"
 
 #ifndef TREE_NODE_H
 #define TREE_NODE_H
@@ -58,6 +59,26 @@ void tree_node_free_recurse(tree_node* n);
     is the node a leaf node?
 */
 bool tree_node_isleaf(tree_node* n);
+
+/*
+    in-order traversal, returns a queue of the
+    tree_node pointers in the order of the tree
+
+    thought about:
+        - function remembers next node and passes
+          back a ptr to the tree node's data
+        - iterator function
+
+    this approach uses a queue which does an
+    allocation for each tree node, which is
+    sub-optimal.  iterator would fix this
+
+    the other option is to provide a closure from
+    the caller which handles the updates and the
+    data, which would also be more efficient
+    (but also pretty ugly in c-notation)
+*/
+void tree_node_inorder(tree_node* node, queue* queue);
 
 /*
     validate the balance factors for a node by calculating heights

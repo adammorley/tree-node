@@ -1,5 +1,8 @@
 #include <assert.h>
 #include <stdlib.h>
+
+#include "../queue/queue.h"
+
 #include "tree_node.h"
 
 void test_basic() {
@@ -69,8 +72,34 @@ void test_check() {
     tree_node_free_recurse(n3);
 }
 
+void test_inorder() {
+    queue* q = queue_new();
+    tree_node* n0 = tree_node_new(0);
+    tree_node* n1 = tree_node_new(1);
+    tree_node* n2 = tree_node_new(2);
+
+    n1->l = n0;
+    n0->p = n1;
+    n1->r = n2;
+    n2->p = n1;
+    tree_node_inorder(n1, q);
+    tree_node* p = NULL;
+    p = (tree_node*) q_dequeue(q);
+    assert(p == n0);
+    assert(p->d == n0->d);
+    p = (tree_node*) q_dequeue(q);
+    assert(p == n1);
+    assert(p->d == n1->d);
+    p = (tree_node*) q_dequeue(q);
+    assert(p == n2);
+    assert(p->d == n2->d);
+    p = (tree_node*) q_dequeue(q);
+    assert(p == NULL);
+}
+
 int main() {
     test_basic();
     test_compare();
     test_check();
+    test_inorder();
 }
