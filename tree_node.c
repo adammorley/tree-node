@@ -70,11 +70,9 @@ bool tree_node_compare(tree_node* n0, tree_node* n1) {
     if (_ptr_compare(n0->p, n1->p)) {
         if (_ptr_compare(n0->r, n1->r)) {
             if (_ptr_compare(n0->l, n1->l)) {
-                if (n0->d == n1->d) {
-                    if (n0->c == n1->c) {
-                        if (n0->b == n1->b) {
-                            return true;
-                        }
+                if (_ptr_compare(n0, n1)) {
+                    if (n0->b == n1->b) {
+                        return true;
                     }
                 }
             }
